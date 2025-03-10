@@ -22,9 +22,10 @@ public class Main {
 
         System.out.println("Dealer");
         CardLinkedList hand = new CardLinkedList();
-        hand = dealer.dealCards(50);
+        hand = dealer.dealCards(5);
         System.out.println("**** Hand ***\n");
         hand.print();
+        dealer.print();
 
 
 

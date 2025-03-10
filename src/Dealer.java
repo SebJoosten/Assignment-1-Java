@@ -39,10 +39,14 @@ public class Dealer {
                 System.out.println("***** NO CARDS TO DEAL *****");
                 return cards;
             }
-            System.out.println("***** CARDS DEALT *****");
 
+
+            //System.out.println("***** CARDS DEALT *****");
             int index = rand.nextInt(deck.getLength());
-            cards.add(deck.removeAt(index));
+            Card temp =  deck.getCardAt(index);
+            cards.add(temp);
+            deck.remove(temp);
+
         }
 
         return cards;

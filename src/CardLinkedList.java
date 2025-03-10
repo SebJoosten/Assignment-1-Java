@@ -91,6 +91,7 @@ public class CardLinkedList {
         head.remove(c);  // Recursively check the next node
     }
 
+    //******************** incomplete ********************
     /**
      * Remove a card at position "n" from the list
      * @param index the position you want to remove the card from

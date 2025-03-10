@@ -51,7 +51,7 @@ public class Node {
     public Card getCard(int count) {
         // count down by one and if not at 0 position move to next node
         count --;
-        if(count == 0){
+        if(count <= 0){
             return thisCard;
         }
         return next.getCard(count);
