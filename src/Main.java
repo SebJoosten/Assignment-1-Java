@@ -28,7 +28,7 @@ public class Main {
         dealer.print();
 
 
-
+        hand = dealer.dealCards(0);
 
     }
 }
