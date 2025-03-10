@@ -17,6 +17,7 @@ public class Card {
     public Card(int n, String s) {
         number = n;
         suit = s;
+
     }
 
     // ***** Methods *****

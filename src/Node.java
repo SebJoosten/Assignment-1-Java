@@ -65,12 +65,18 @@ public class Node {
         return next;
     }
 
+    /**
+     * A Simple method to return the card in this node
+     * @return The card in this node
+     */
     public Card isCard() {
         return thisCard;
     }
 
-
-
+    /**
+     * Goes progressively down the list and looks for a card that matches the input
+     * @param c The card you wish to look for in the list
+     */
     public void remove(Card c) {
 
         if (next.isCard() != null && next.isCard().equals(c)) {
@@ -81,7 +87,9 @@ public class Node {
 
     }
 
-
+    /**
+     * Just prints the value of this card in the console for checking
+     */
     public void print(){
         System.out.println(thisCard.print());
         if (next != null) { next.print(); }

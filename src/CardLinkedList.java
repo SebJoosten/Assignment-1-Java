@@ -67,12 +67,15 @@ public class CardLinkedList {
             System.out.println("INVALID CARD ADD");
             return;
         }
-        System.out.println("Adding Card: " + c.print());
+       //System.out.println("Adding Card: " + c.print());
         Node n = new Node(c, head);
             head = n;
     }
 
-
+    /**
+     * Remove a specific card in this list
+     * @param c The card you want to remove
+     */
     public void remove(Card c) {
         if (c == null || head == null) {
             System.out.println("INVALID CARD REMOVE");
@@ -88,8 +91,31 @@ public class CardLinkedList {
         head.remove(c);  // Recursively check the next node
     }
 
+    /**
+     * Remove a card at position "n" from the list
+     * @param index the position you want to remove the card from
+     */
+    public Card removeAt(int n) {
+        //if (n  - 1 > getLength()) {
+        //    System.out.println("INVALID CARD REMOVE");
+        //    return null;
+       // }
 
+        // Get the card at the index and remove it from this instance of the list
+        Card temp = head.getCard(n);
+        remove(temp);
+        return temp;
+    }
+
+    /**
+     * Starts the print chain for this list
+     * Will print out every value
+     */
     public void print() {
+        if (head == null) {
+            System.out.println("***** NO CARDS TO PRINT *****");
+            return;
+        }
         head.print();
     }
 }
