@@ -1,5 +1,4 @@
 
-
 /**
  * This is the class to hold the linked list of cards in the card game
  * it can also check some operators of the list.
@@ -21,16 +20,15 @@ public class CardLinkedList {
     //***** Methods *****
 
     /**
-     * A Method to check if the list is empty or not
+     * Method to check if the list is empty or not
      * @return True if empty, False if populated
      */
     public boolean isEmpty() {
-        if (head == null) { return true; }
-        return false;
+        return head == null;
     }
 
     /**
-     * Starts a recursive call down the chain to get the number of cards in this card list
+     * Starts a recursive call down the nodes to get the number of cards in this card list
      * @return The number of counter cards, 0 if no cards in list
      */
     public int getLength() {
@@ -39,37 +37,48 @@ public class CardLinkedList {
     }
 
     /**
-     * This Method is to check if a specific card is in the list
-     * @param c The card your looking for
-     * @return True if found false if not
+     * Checks for a card of the same value in this instance of CardLinkedList
+     * @param c The card with the paramators your looking for
+     * @return True if found otherwise false
      */
     public boolean hasCard(Card c) {
-        if (head == null) {return false;}
+        // if list is empty return false
+        if (head == null) {
+            return false;
+        }
+
+        // if list is populated send call down the nodes
         return head.hasCard(c);
     }
 
     /**
-     * A Method to get a card as a specific index
+     * Get a card as a specific index in this instance of CardLinkedList
      * @param index The card index your looking for
      * @return The Card at that index OR null if index out of bounds
      */
     public Card getCardAt(int index) {
-        if(head == null || index > getLength()) { return null; }
+        // Check deck is populated or index is valid
+        if(head == null || index > getLength()) {
+            return null;
+        }
+
+        // if deck is populated send the call down the list
         return head.getCard(index);
     }
 
     /**
-     * This method adds a new node to the list
-     * @param c The card contained inside this node
+     * Adds a new node to the list
+     * @param c The card you wish to add to this instance of list - Invalid card will just return
      */
     public void add(Card c) {
+        // Check to avoid null adds
         if(c == null) {
-            System.out.println("INVALID CARD ADD");
+            System.out.println("***** INVALID CARD ADD *****");
             return;
         }
-       //System.out.println("Adding Card: " + c.print());
-        Node n = new Node(c, head);
-            head = n;
+
+        // Add the card to a new node in the list
+        head = new Node(c, head);
     }
 
     /**
@@ -77,19 +86,38 @@ public class CardLinkedList {
      * @param c The card you want to remove
      */
     public void remove(Card c) {
+
+        // Check there is objects in the list and c is not null
         if (c == null || head == null) {
-            System.out.println("INVALID CARD REMOVE");
+            System.out.println("***** INVALID CARD REMOVE *****");
             return;
         }
 
-
+        // Checks the head before passing down the nodes
         if (head.isCard() != null && head.isCard().equals(c)) {
-            head = head.getNext();  // Remove the head if it matches
+            head = head.getNext();
             return;
         }
 
-        head.remove(c);  // Recursively check the next node
+        // Check down the rest of the nodes
+        head.remove(c);
     }
+
+    /**
+     * Starts the print chain in this instance of list
+     */
+    public void print() {
+
+        // Check list is populated
+        if (head == null) {
+            System.out.println("***** NO CARDS TO PRINT *****");
+            return;
+        }
+
+        // Call print down the rest of the nodes
+        head.print();
+    }
+
 
     //******************** incomplete ********************
     /**
@@ -108,15 +136,5 @@ public class CardLinkedList {
         return temp;
     }
 
-    /**
-     * Starts the print chain for this list
-     * Will print out every value
-     */
-    public void print() {
-        if (head == null) {
-            System.out.println("***** NO CARDS TO PRINT *****");
-            return;
-        }
-        head.print();
-    }
+
 }

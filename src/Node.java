@@ -1,8 +1,6 @@
 /**
  * Each node holds a card and holds the position in the linked list
  */
-
-
 public class Node {
 
     private Node next;
@@ -11,8 +9,9 @@ public class Node {
     //***** constructor *****
 
     /**
-     * initializes this node with the input card
+     * Initializes this node with the input card
      * @param c The card you want to add to this node
+     * @param n The next node in the chain
      */
     public Node(Card c, Node n) {
         thisCard = c;
@@ -22,13 +21,22 @@ public class Node {
     //***** Methods *****
 
     /**
-     * A recursive method to search down the list and check for a card
+     * A Method to search down the list and check for a card
      * @param c The card you want to look for
-     * @return True if this is that card and recursive if not OR false if at end of list
+     * @return True if this is that card OR pass call to next node - false if no more nodes
      */
     public boolean hasCard(Card c) {
-        if(thisCard.equals(c)) { return true; }
-        if(next != null) { return next.hasCard(c); }
+
+        // Return true if this node contains card = "c"
+        if(thisCard.equals(c)) {
+            return true;
+        }
+
+        // If there is another node continue down
+        if(next != null) {
+            return next.hasCard(c);
+        }
+
         return false;
     }
 
@@ -39,7 +47,11 @@ public class Node {
      */
     public int getLength(int count) {
         count ++;
-        if(next != null) { return next.getLength(count); }
+
+        if(next != null) {
+            return next.getLength(count);
+        }
+
         return count;
     }
 
@@ -49,7 +61,7 @@ public class Node {
      * @return The card at that index null check done in CardLinkedList Class
      */
     public Card getCard(int count) {
-        // count down by one and if not at 0 position move to next node
+        // Count down by one and if not at 0 position move to next node
         count --;
         if(count <= 0){
             return thisCard;
@@ -75,15 +87,18 @@ public class Node {
 
     /**
      * Goes progressively down the list and looks for a card that matches the input
-     * @param c The card you wish to look for in the list
+     * @param c The card you want to remove from this instance of list
      */
     public void remove(Card c) {
 
+        // check if the next card is the one your looking for and remove it
         if (next.isCard() != null && next.isCard().equals(c)) {
-            next = next.getNext();  // Remove the head if it matches
+            next = next.getNext();
             return;
         }
-         next.remove(c);  // Recursively check the next node
+
+        // Pass down the call to next node
+        next.remove(c);
 
     }
 
@@ -92,6 +107,8 @@ public class Node {
      */
     public void print(){
         System.out.println(thisCard.print());
+
+        // if there is another node call its print Function
         if (next != null) { next.print(); }
     }
 

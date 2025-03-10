@@ -1,7 +1,6 @@
 /**
- * This is the card class it holds the details of a playing card and its Parameters
+ * This is the card class, it holds the details of a playing card
  */
-
 public class Card {
 
     private int number;             // The number value of this card
@@ -17,7 +16,6 @@ public class Card {
     public Card(int n, String s) {
         number = n;
         suit = s;
-
     }
 
     // ***** Methods *****
@@ -29,18 +27,19 @@ public class Card {
      */
     @Override
     public boolean equals(Object input) {
-        // Ensure valid input
+
+        // Ensure valid input and case card to "compare"
         if (!(input instanceof Card compare)) {
             return false;
         }
 
-        // Compare number and suit false if different
+        // Compare number and suit and return result
         return compare.getNumber() == this.number && compare.getSuit().equals(this.suit);
     }
 
     /**
      * This method retrieves the integer representation of the card's number.
-     * @return The number of this card
+     * @return The number of this instance of card
      */
     public int getNumber() {
         return number;
@@ -48,18 +47,18 @@ public class Card {
 
     /**
      * Retrieves the suit of this card.
-     * @return The suit, e.g., "hearts", "clubs", "spades", or "diamonds".
+     * @return The suit, e.g. "Hearts   <3 ", "Clubs   o8- ", "Spades  <-- ", or "Diamonds <> ".
      */
     public String getSuit() {
         return suit;
     }
 
     /**
-     * This makes a string of the value of this card
-     * @return The string that represents thins card
+     * Creates and formats a string representing this instance of card
+     * @return The string that represents this card
      */
     public String print(){
-        return ("Card - " + suit + " of " + number);
+        return ("Card - " + String.format("%-2s" , String.valueOf(number)) + " of " + suit);
     }
 
 
