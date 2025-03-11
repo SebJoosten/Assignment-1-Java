@@ -19,9 +19,11 @@ public class Main {
 
         Dealer dealer= new Dealer(1);
 
+
         dealer.addPlayer(new Player("Joosten"));
         dealer.addPlayer(new Player("Seb"));
         dealer.addPlayer(new Player("Josh"));
+        dealer.addPlayer(new Player("testing"));
 
         dealer.printPlayers();
 
@@ -30,6 +32,13 @@ public class Main {
         dealer.dealCards(5);
 
         dealer.printPlayers();
+        dealer.printPlayers();
+        dealer.printCards();
+        dealer.printCards();
+        dealer.printPlayers();
+        dealer.printPlayers();
+        dealer.printCards();
+
 
 
 

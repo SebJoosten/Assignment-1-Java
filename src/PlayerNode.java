@@ -56,9 +56,15 @@ public class PlayerNode {
         thisPlayer.print();
 
         // if there is another node call its print Function
-        if (next != null) { next.print(); }
+        if (next == null) { return; }
+        next.print();
     }
 
+    /**
+     * Return a player at a specific index
+     * @param n The player you want to select
+     * @return The player at that position in the list
+     */
     public Player getPlayerAt(int n){
         n --;
         if (n == 0){

@@ -12,8 +12,8 @@ public class Dealer {
     private CardLinkedList deck = new CardLinkedList();
     private PlayerNode firstPlayer;
 
-     // The version of deck you want to use
-     private int deckVer;
+    // The version of deck you want to use
+    private int deckVer;
 
     /**
      * Dealer constructor
@@ -57,7 +57,7 @@ public class Dealer {
             }
 
             // Pick a random card - remove it from deck - add it to return deck
-            int index = rand.nextInt(deck.getLength());
+            int index = rand.nextInt(deck.getLength()) + 1;
             Card temp =  deck.getCardAt(index);
             cards.add(temp);
             deck.remove(temp);
@@ -71,7 +71,7 @@ public class Dealer {
      * @param n the number of cards for each player
      */
     public void dealCards(int n) {
-        for (int i = 1; i < playerCount(); i++) {
+        for (int i = 1; i < playerCount() + 1; i++) {
             CardLinkedList newHand = randomCards(n);
             getPlayerAtIndex(i).giveCards(newHand);
         }

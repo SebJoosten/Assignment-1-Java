@@ -63,9 +63,10 @@ public class Node {
     public Card getCard(int count) {
         // Count down by one and if not at 0 position move to next node
         count --;
-        if(count <= 0){
+        if(count == 0){
             return thisCard;
         }
+
         return next.getCard(count);
     }
 
@@ -109,7 +110,8 @@ public class Node {
         System.out.println(thisCard.print());
 
         // if there is another node call its print Function
-        if (next != null) { next.print(); }
+        if (next == null) { return; }
+        next.print();
     }
 
 }

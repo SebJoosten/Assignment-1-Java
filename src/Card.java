@@ -6,7 +6,7 @@ public class Card {
     private int number;             // The number value of this card
     private String suit;            // The suit, e.g., "hearts", "clubs", "spades", or "diamonds".
 
-    // ***** Constructors *****
+    // ***** Constructor *****
 
     /**
      * Initializes this card object
@@ -58,8 +58,18 @@ public class Card {
      * @return The string that represents this card
      */
     public String print(){
-        return ("Card - " + String.format("%-2s" , String.valueOf(number)) + " of " + suit);
-    }
 
+        // Generate the card name otherwise use a number
+        // Advanced switch case Commented for personal note
+        String cardName = switch (number) {
+            case 11 -> "Jack";
+            case 12 -> "Queen";
+            case 13 -> "King";
+            default -> String.valueOf(number);
+        };
+
+        // Return formatted string
+        return ("Card - " + String.format("%-6s" , cardName) + " of " + suit);
+    }
 
 }

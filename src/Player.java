@@ -35,11 +35,63 @@ public class Player {
      * @return The number of points this player has from there hand
      */
     public int getPoints(){
-       if(hand == null ||hand.isEmpty()){return 0;}
 
-       // ******* Points tally here *****
+        System.out.println(" Comparing " );
 
-       return 0;
+        // Check hand is not empty
+        if(hand == null || hand.isEmpty()){return 0;}
+
+        // Set points to 0 and initialize processed list
+        int points = 0;
+        CardLinkedList processed = new CardLinkedList();
+
+        System.out.println(" Comparing " );
+
+        // For every card in the hand
+        while(!hand.isEmpty()){
+
+
+           // Take a card out of the hand
+            CardLinkedList processing = new CardLinkedList();
+            Card compare = hand.getCardAt(1);
+            hand.remove(compare);
+            processing.add(compare);
+
+            System.out.println(" Comparing " );
+
+           // For every remaining card
+           for(int j = hand.getLength(); j == 0 ; j = hand.getLength()){
+               if(compare.equals(hand.getCardAt(j))){
+                    Card c = hand.getCardAt(j);
+                    hand.remove(c);
+                    processing.add(c);
+                   System.out.println( j );
+               }
+           }
+
+
+            int multiplayer = switch (processing.getLength()) {
+                case 2 -> 10;
+                case 3 -> 100;
+                case 4 -> 1000;
+                default -> 1;
+            };
+
+            points += multiplayer * (processing.getCardAt(1).getNumber() );
+
+            // Move processed cards to the new list
+            while (!processing.isEmpty()) {
+                Card c = processing.getCardAt(1);
+                processed.add(c);
+                processing.remove(c);
+                hand.remove(c); // Remove from the original hand too
+            }
+
+        }
+
+        hand = processed;
+
+        return points;
     }
 
     /**
