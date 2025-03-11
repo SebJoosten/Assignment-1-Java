@@ -69,14 +69,16 @@ public class Player {
            }
 
 
+
             int multiplayer = switch (processing.getLength()) {
                 case 2 -> 10;
                 case 3 -> 100;
                 case 4 -> 1000;
+                case 5 -> 10000;
                 default -> 1;
             };
 
-            points += multiplayer * (processing.getCardAt(1).getNumber() );
+            points += multiplayer * (processing.getCardAt(1).getNumber() * processing.getLength() );
 
             // Move processed cards to the new list
             while (!processing.isEmpty()) {

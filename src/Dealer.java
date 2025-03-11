@@ -135,6 +135,7 @@ public class Dealer {
             case 3:
                 for(int i = 0; i < 52; i++){
                     Card addCard = new Card((1) , "Diamonds   <3 ");
+                    deck.add(addCard);
                 }
                 break;
 

@@ -17,7 +17,7 @@ public class Main {
 
 
 
-        Dealer dealer= new Dealer(1);
+        Dealer dealer= new Dealer(3);
 
         Player test = new Player("testing");
         dealer.addPlayer(new Player("Joosten"));
@@ -38,7 +38,7 @@ public class Main {
 
         int players = dealer.playerCount();
 
-        dealer.dealCards(5);
+        dealer.dealCards(4);
 
         dealer.printPlayers();
         dealer.printPlayers();
