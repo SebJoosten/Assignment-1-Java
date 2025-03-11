@@ -36,7 +36,6 @@ public class Player {
      */
     public int getPoints(){
 
-        System.out.println(" Comparing " );
 
         // Check hand is not empty
         if(hand == null || hand.isEmpty()){return 0;}
@@ -57,15 +56,15 @@ public class Player {
             hand.remove(compare);
             processing.add(compare);
 
-            System.out.println(" Comparing " );
+
 
            // For every remaining card
-           for(int j = hand.getLength(); j == 0 ; j = hand.getLength()){
+           for(int j = hand.getLength(); j > 1 ; j--){
+               System.out.println(" Comparing " );
                if(compare.equals(hand.getCardAt(j))){
                     Card c = hand.getCardAt(j);
                     hand.remove(c);
                     processing.add(c);
-                   System.out.println( j );
                }
            }
 
@@ -84,7 +83,7 @@ public class Player {
                 Card c = processing.getCardAt(1);
                 processed.add(c);
                 processing.remove(c);
-                hand.remove(c); // Remove from the original hand too
+                System.out.println(" Moving " );
             }
 
         }
