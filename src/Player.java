@@ -57,7 +57,6 @@ public class Player {
     public void print() {
         System.out.println("------ " + name + " ------");
         hand.print();
-        System.out.println("--------------------------");
     }
 
 }

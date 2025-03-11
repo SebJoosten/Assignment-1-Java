@@ -19,16 +19,19 @@ public class Main {
 
         Dealer dealer= new Dealer(1);
 
+        dealer.addPlayer(new Player("Joosten"));
+        dealer.addPlayer(new Player("Seb"));
+        dealer.addPlayer(new Player("Josh"));
 
-        System.out.println("Dealer");
-        CardLinkedList hand = new CardLinkedList();
-        hand = dealer.dealCards(5);
-        System.out.println("**** Hand ***\n");
-        hand.print();
-        dealer.print();
+        dealer.printPlayers();
+
+        int players = dealer.playerCount();
+
+        dealer.dealCards(5);
+
+        dealer.printPlayers();
 
 
-        hand = dealer.dealCards(0);
 
     }
 }

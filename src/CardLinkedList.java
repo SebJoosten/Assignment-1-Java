@@ -118,23 +118,4 @@ public class CardLinkedList {
         head.print();
     }
 
-
-    //******************** incomplete ********************
-    /**
-     * Remove a card at position "n" from the list
-     * @param index the position you want to remove the card from
-     */
-    public Card removeAt(int n) {
-        //if (n  - 1 > getLength()) {
-        //    System.out.println("INVALID CARD REMOVE");
-        //    return null;
-       // }
-
-        // Get the card at the index and remove it from this instance of the list
-        Card temp = head.getCard(n);
-        remove(temp);
-        return temp;
-    }
-
-
 }

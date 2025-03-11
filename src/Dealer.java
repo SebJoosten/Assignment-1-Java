@@ -4,11 +4,13 @@ import java.util.Random;
 
 /**
  * A class to hold the details of the cards and the card dealer *  will also announce the winner/s
+ * The dealer also holds a linked list of players
  */
 public class Dealer {
 
     // A list to hold the cards in the game
     private CardLinkedList deck = new CardLinkedList();
+    private PlayerNode firstPlayer;
 
      // The version of deck you want to use
      private int deckVer;
@@ -24,6 +26,7 @@ public class Dealer {
     public Dealer( int d){
         deckVer = d;
         initDeck();
+        firstPlayer = null;
     }
 
     /**
@@ -37,10 +40,10 @@ public class Dealer {
     //****** Methods ******
 
     /**
-     * Will deal "n" number of cards from this dealers deck
+     * Will deal "n" number of random cards from this dealers deck
      * @return CardLinkedList with "n" number of cards - Empty list if no deck present or "n" = 0
      */
-    public CardLinkedList dealCards(int n) {
+    public CardLinkedList randomCards(int n) {
 
         // List for the cards to return and Random number
         CardLinkedList cards = new CardLinkedList();
@@ -61,6 +64,51 @@ public class Dealer {
         }
 
         return cards;
+    }
+
+    /**
+     * Deals all the players in this dealers control "m" number of cards
+     * @param n the number of cards for each player
+     */
+    public void dealCards(int n) {
+        for (int i = 1; i < playerCount(); i++) {
+            CardLinkedList newHand = randomCards(n);
+            getPlayerAtIndex(i).giveCards(newHand);
+        }
+    }
+
+    /**
+     * Returns the player at that index
+     * @param index The player number you want from the list
+     * @return The player at that index in the list
+     */
+    private Player getPlayerAtIndex(int index) {
+        if (index < 0 ) {
+            return null;
+        }
+        return firstPlayer.getPlayerAt(index);
+    }
+
+    /**
+     * Populated this dealers deck with a standard 52 card set
+     */
+    private void standardCardDeck(){
+        for(int i = 0; i < 13; i++){
+            Card addCard = new Card((i + 1) , "Hearts   <3 ");
+            deck.add(addCard);
+        }
+        for(int i = 0; i < 13; i++){
+            Card addCard = new Card((i + 1) , "Clubs   o8- ");
+            deck.add(addCard);
+        }
+        for(int i = 0; i < 13; i++){
+            Card addCard = new Card((i + 1) , "Spades  <-- ");
+            deck.add(addCard);
+        }
+        for(int i = 0; i < 13; i++){
+            Card addCard = new Card((i + 1) , "Diamonds <> ");
+            deck.add(addCard);
+        }
     }
 
     /**
@@ -103,32 +151,58 @@ public class Dealer {
     /**
      * Prints out all the cards the dealer currently has in this instance
      */
-    public void print(){
+    public void printCards(){
         System.out.println("--- Dealers cards ---");
         deck.print();
         System.out.println("---------------------");
     }
 
     /**
-     * Populated this dealers deck with a standard 52 card set
+     * Prints out a list of all the players this dealer manages
      */
-    private void standardCardDeck(){
-        for(int i = 0; i < 13; i++){
-            Card addCard = new Card((i + 1) , "Hearts   <3 ");
-            deck.add(addCard);
-        }
-        for(int i = 0; i < 13; i++){
-            Card addCard = new Card((i + 1) , "Clubs   o8- ");
-            deck.add(addCard);
-        }
-        for(int i = 0; i < 13; i++){
-            Card addCard = new Card((i + 1) , "Spades  <-- ");
-            deck.add(addCard);
-        }
-        for(int i = 0; i < 13; i++){
-            Card addCard = new Card((i + 1) , "Diamonds <> ");
-            deck.add(addCard);
+    public void printPlayers(){
+        if(firstPlayer == null){
+            System.out.println("***** No Players *****");
+        } else {
+            System.out.println("---    Players    ---");
+            firstPlayer.print();
+            System.out.println("---------------------");
         }
     }
+
+    /**
+     * adds a new player node and player to this dealer
+     * @param p The player you wish to add
+     */
+    public void addPlayer(Player p) {
+        // Check to avoid null adds
+        if(p == null) {
+            System.out.println("***** INVALID PLAYER *****");
+            return;
+        }
+
+        // Add a player to the game
+        firstPlayer = new PlayerNode(p, firstPlayer);
+    }
+
+    /**
+     * Starts a recursive call down the nodes to get the number of Players
+     * @return The number of Players, 0 if no players
+     */
+    public int playerCount() {
+        if(firstPlayer == null) { return 0; }
+        return firstPlayer.getLength(0);
+    }
+
+    /**
+     * Remove all the players and make a new deck of this instances choice
+     */
+    public void restartGame(){
+        firstPlayer = null;
+        deck = new CardLinkedList();
+        initDeck();
+    }
+
+
 
 }
