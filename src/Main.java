@@ -17,28 +17,25 @@ public class Main {
 
 
 
-        Dealer dealer= new Dealer(3);
+        Dealer dealer= new Dealer(1);
 
         Player test = new Player("testing");
-        dealer.addPlayer(new Player("Joosten"));
-        dealer.addPlayer(new Player("Seb"));
-        dealer.addPlayer(new Player("Josh1"));
-        dealer.addPlayer(new Player("Jos2"));
-        dealer.addPlayer(new Player("Josh3"));
-        dealer.addPlayer(new Player("Josh4"));
-        dealer.addPlayer(new Player("Josh5"));
-        dealer.addPlayer(new Player("Josh6"));
-        dealer.addPlayer(new Player("Josh7"));
-        dealer.addPlayer(new Player("Josh8"));
-        dealer.addPlayer(new Player("Josh9"));
-        dealer.addPlayer(new Player("Josh10"));
+        //dealer.addPlayer(new Player("Joosten"));
+        //dealer.addPlayer(new Player("Seb"));
+       // dealer.addPlayer(new Player("Josh1"));
+        //dealer.addPlayer(new Player("Jos2"));
+        //dealer.addPlayer(new Player("Josh3"));
+        //dealer.addPlayer(new Player("Josh4"));
+        //dealer.addPlayer(new Player("Josh5"));
+        //dealer.addPlayer(new Player("Josh6"));
+
         dealer.addPlayer(test);
 
         dealer.printPlayers();
 
         int players = dealer.playerCount();
 
-        dealer.dealCards(-1);
+        dealer.dealCards(5);
 
         dealer.printPlayers();
         dealer.printPlayers();

@@ -68,7 +68,7 @@ public class Player {
             }
 
             // Calculate points
-            points += multiplayer * ((long)processing.getCardAt(1).getNumber() * processing.getLength() );
+            points += multiplayer * ((long)processing.getCardAt(1).getNumber());
 
             // Move processed cards to the new list
             while (!processing.isEmpty()) {
