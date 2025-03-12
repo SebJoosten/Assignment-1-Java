@@ -47,7 +47,7 @@ public class Card {
 
     /**
      * Retrieves the suit of this card.
-     * @return The suit, e.g. "Hearts   <3 ", "Clubs   o8- ", "Spades  <-- ", or "Diamonds <> ".
+     * @return The suit- ""Hearts   <3 ", "Clubs   o8- ", "Spades  <-- ", or "Diamonds <> ".
      */
     public String getSuit() {
         return suit;

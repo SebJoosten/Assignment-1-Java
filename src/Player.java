@@ -34,60 +34,48 @@ public class Player {
      *A method asking the player for the tally of their points
      * @return The number of points this player has from there hand
      */
-    public int getPoints(){
-
+    public long getPoints(){
 
         // Check hand is not empty
         if(hand == null || hand.isEmpty()){return 0;}
 
         // Set points to 0 and initialize processed list
-        int points = 0;
+        long points = 0;
         CardLinkedList processed = new CardLinkedList();
-
-        System.out.println(" Comparing " );
 
         // For every card in the hand
         while(!hand.isEmpty()){
 
-
-           // Take a card out of the hand
+            // Take a card out of the hand
             CardLinkedList processing = new CardLinkedList();
             Card compare = hand.getCardAt(1);
             hand.remove(compare);
             processing.add(compare);
 
-
-
-           // For every remaining card
-           for(int j = hand.getLength(); j > 1 ; j--){
-               System.out.println(" Comparing " );
-               if(compare.equals(hand.getCardAt(j))){
+            // For every remaining card
+            for(int j = hand.getLength(); j > 0 ; j--){
+                if(compare.equals(hand.getCardAt(j))){
                     Card c = hand.getCardAt(j);
                     hand.remove(c);
                     processing.add(c);
-               }
-           }
+                }
+            }
 
+            // Set the multiplier
+            long multiplayer = 1;
+            for(int i = 1; i < processing.getLength(); i++){
+                multiplayer *= 10;
+            }
 
-
-            int multiplayer = switch (processing.getLength()) {
-                case 2 -> 10;
-                case 3 -> 100;
-                case 4 -> 1000;
-                case 5 -> 10000;
-                default -> 1;
-            };
-
-            points += multiplayer * (processing.getCardAt(1).getNumber() * processing.getLength() );
+            // Calculate points
+            points += multiplayer * ((long)processing.getCardAt(1).getNumber() * processing.getLength() );
 
             // Move processed cards to the new list
             while (!processing.isEmpty()) {
                 Card c = processing.getCardAt(1);
                 processed.add(c);
                 processing.remove(c);
-                System.out.println(" Moving " );
             }
-
         }
 
         hand = processed;

@@ -38,7 +38,7 @@ public class Main {
 
         int players = dealer.playerCount();
 
-        dealer.dealCards(4);
+        dealer.dealCards(-1);
 
         dealer.printPlayers();
         dealer.printPlayers();
