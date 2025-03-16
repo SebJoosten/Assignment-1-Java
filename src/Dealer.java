@@ -3,8 +3,11 @@
 import java.util.Random;
 
 /**
- * A class to hold the details of the cards and the card dealer *  will also announce the winner/s
- * The dealer also holds a linked list of players
+ * This is the game dealer
+ * The dealer is either given cards or asked to generate a standard deck
+ * The dealer is given the players in this game
+ * The dealer also deals cards and calculates points
+ * *** PLAYER NODE AT BOTTOM ***
  */
 public class Dealer {
 
@@ -40,7 +43,8 @@ public class Dealer {
     //****** Methods ******
 
     /**
-     * Will deal "n" number of random cards from this dealers deck
+     * Will deal "n" number of random cards and remove them from dealers deck
+     * The dealer will deal cards to the players in its instance
      * @return CardLinkedList with "n" number of cards - Empty list if no deck present or "n" = 0
      */
     public CardLinkedList randomCards(int n) {
@@ -67,13 +71,20 @@ public class Dealer {
     }
 
     /**
-     * Deals all the players in this dealers control "m" number of cards
-     * @param n the number of cards for each player
+     * Deals all the players in this dealers control "n" number of cards
+     * If no cards left the dealer will deal empty hands
+     * Make sure you have enough cards for the rules you would like to use
+     * @param n the number of cards for each player in the dealers control
+     *          OR an empty/incomplete hand
      */
     public void dealCards(int n) {
+
         for (int i = 1; i < playerCount() + 1; i++) {
+
             CardLinkedList newHand = randomCards(n);
             Player p = getPlayerAtIndex(i);
+
+            // Makes sure something is always returned even if it's an empty hand
             if (newHand != null && p != null) {
                 p.giveCards(newHand);
             }
@@ -117,6 +128,10 @@ public class Dealer {
     /**
      * Builds a deck based on what deckVer is present
      * Generated Standard deck if invalid or 0
+     *      1 = Standard 52 card deck
+     *      2 = Deck with only hearts to generate higher chance of doubles
+     *      3 = Deck of all the same card 52 times
+     *      Default Normal 52 card deck
      */
     private void initDeck(){
         switch (deckVer){
@@ -175,23 +190,24 @@ public class Dealer {
     }
 
     /**
-     * adds a new player node and player to this dealer
-     * @param p The player you wish to add
+     * Adds a new player under this instance of dealers control
+     * @param p The player instance you wish to add
      */
     public void addPlayer(Player p) {
+
         // Check to avoid null adds
         if(p == null) {
             System.out.println("***** INVALID PLAYER *****");
             return;
         }
 
-        // Add a player to the game
+        // Add a player to this dealer
         firstPlayer = new PlayerNode(p, firstPlayer);
     }
 
     /**
      * Starts a recursive call down the nodes to get the number of Players
-     * @return The number of Players, 0 if no players
+     * @return The number of Players otherwise 0 if no players
      */
     public int playerCount() {
         if(firstPlayer == null) { return 0; }
@@ -200,6 +216,7 @@ public class Dealer {
 
     /**
      * Remove all the players and make a new deck of this instances choice
+     * If you wish to use different cards create a new instance of dealer
      */
     public void restartGame(){
         firstPlayer = null;
@@ -209,10 +226,16 @@ public class Dealer {
 
 
     // ********** Player Node **********
+
+    /**
+     * This is a node used for a linked list of players.
+     * Only the dealer can use this node use .addPlayer to add a player
+     */
     private class PlayerNode {
 
-
+        // The next node in the list, null if last
         private PlayerNode next;
+        // The player in this node
         private Player thisPlayer;
 
         //***** constructor *****
@@ -232,7 +255,7 @@ public class Dealer {
         /**
          * A Method for counting the nodes in this Linked List
          * @param count The previous node count
-         * @return The number of nodes
+         * @return previous node count + 1 if last otherwise continue down the list
          */
         public int getLength(int count) {
             count ++;
@@ -246,9 +269,11 @@ public class Dealer {
 
         /**
          * Gets the next node in the list from this one
-         * @return The next node in this list
+         * Can only be accessed by dealer
+         * @return The next node in this list or NULL if last node
          */
         public PlayerNode getNext() {
+            if(next == null) {return null;}
             return next;
         }
 
@@ -265,21 +290,24 @@ public class Dealer {
 
         /**
          * Return a player at a specific index
-         * @param n The player you want to select
-         * @return The player at that position in the list
+         * @param n The player position you want from the list
+         * @return The player at that position in the list otherwise NULL
          */
         public Player getPlayerAt(int n){
+
             n --;
             if (n == 0){
                 return thisPlayer;
             }
+
             if(next == null){
+                System.out.println("***** INVALID PLAYER *****");
                 return null;
             }
+
             return next.getPlayerAt(n);
 
         }
-
 
     }
 
