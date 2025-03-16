@@ -16,36 +16,37 @@ public class Main {
 
 
 
+        // Create a dealer with deck 1 generated
+        Dealer dealer= new Dealer(3);
 
-        Dealer dealer= new Dealer(1);
+        // Add 10 players
+        dealer.addPlayer(new Player("Jack"));
+        dealer.addPlayer(new Player("Seb"));
+        dealer.addPlayer(new Player("Josh"));
+        dealer.addPlayer(new Player("Joe"));
+        dealer.addPlayer(new Player("Laura"));
+        dealer.addPlayer(new Player("Sabeen"));
+        dealer.addPlayer(new Player("Kimi"));
+        dealer.addPlayer(new Player("Ben"));
+        dealer.addPlayer(new Player("The unknown"));
+        dealer.addPlayer(new Player("Redacted"));
 
-        Player test = new Player("testing");
-        //dealer.addPlayer(new Player("Joosten"));
-        //dealer.addPlayer(new Player("Seb"));
-       // dealer.addPlayer(new Player("Josh1"));
-        //dealer.addPlayer(new Player("Jos2"));
-        //dealer.addPlayer(new Player("Josh3"));
-        //dealer.addPlayer(new Player("Josh4"));
-        //dealer.addPlayer(new Player("Josh5"));
-        //dealer.addPlayer(new Player("Josh6"));
-
-        dealer.addPlayer(test);
-
-        dealer.printPlayers();
-
-        int players = dealer.playerCount();
-
+        // Deal each played 5 cards
         dealer.dealCards(5);
 
-        dealer.printPlayers();
-        dealer.printPlayers();
-        dealer.printCards();
+        // Print a list of dealers remaining cards and players cards
         dealer.printCards();
         dealer.printPlayers();
-        dealer.printPlayers();
-        dealer.printCards();
-        test.print();
-        System.out.println(test.getPoints());
+
+        dealer.rankPlayers();
+
+
+
+
+
+
+
+
 
 
 

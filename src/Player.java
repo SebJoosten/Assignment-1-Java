@@ -93,6 +93,15 @@ public class Player {
     }
 
     /**
+     * Gets the players name
+     * @return String of this player instances name
+     */
+    public String getName() {
+        if(name == null||name.isEmpty()){return "** NO ASSIGNED NAME **";}
+        return name;
+    }
+
+    /**
      * Prints out this players hand
      */
     public void print() {

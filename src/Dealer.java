@@ -224,6 +224,63 @@ public class Dealer {
         initDeck();
     }
 
+    /**
+     * This is a method to take all the players in this dealers control and see who has won
+     * It will print out a list inorder of all the players and there total points
+     */
+    public void rankPlayers(){
+        int[] pointsList = new int[playerCount()];
+        String[] playerNames = new String[playerCount()];
+
+        // Loop through all the players and get there names and points totals
+        for(int i = 0; i < playerCount(); i++){
+            Player p = getPlayerAtIndex(i + 1);
+            if (p != null) {
+                pointsList[i] = (int) p.getPoints();
+                playerNames[i] = (String) p.getName();
+            }
+        }
+
+
+        for (int i = 0; i < pointsList.length; i++) {
+            for (int j = i + 1; j < pointsList.length; j++) {
+                // Sort the players and their points in descending order
+                if (pointsList[i] < pointsList[j]) {
+                    // Swap points
+                    int p = pointsList[i];
+                    pointsList[i] = pointsList[j];
+                    pointsList[j] = p;
+
+                    // Swap player names
+                    String n = playerNames[i];
+                    playerNames[i] = playerNames[j];
+                    playerNames[j] = n;
+                }
+            }
+        }
+
+        // Prints out the name and point tally in a formatted list
+        // Winner at the top
+        System.out.println("********** RANKING **********");
+        int countOffset = 0;
+
+        for(int i = 0; i < pointsList.length; i++){
+            if(pointsList[i] == 0){ continue; }
+
+            if(i + 1 < pointsList.length && pointsList[i] == pointsList[i + 1]){
+
+                System.out.printf("%2s%n", ((i + 1) - countOffset) + " - " + String.format("%12s", playerNames[i]) + " = " + String.format("%12s", playerNames[i +1]) + " with " + pointsList[i] + " points");
+                countOffset++;
+                pointsList[i + 1] = 0;
+
+            } else {
+                System.out.printf("%2s%n", ((i + 1) - countOffset) + " - " + String.format("%12s", playerNames[i]) + " with " + pointsList[i] + " points");
+            }
+        }
+        System.out.println("-----------------------------");
+
+    }
+
 
     // ********** Player Node **********
 
