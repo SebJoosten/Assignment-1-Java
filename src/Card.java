@@ -35,8 +35,12 @@ public class Card {
             return false;
         }
 
-        // Compare number and suit and return result
-        return compare.getNumber() == this.number;
+        //  Compares the card properties
+        if (compare.getSuit().equals(this.getSuit()) && compare.getNumber() == this.getNumber()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

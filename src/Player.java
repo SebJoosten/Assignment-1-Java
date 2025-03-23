@@ -54,7 +54,7 @@ public class Player {
 
             // For every remaining card
             for(int j = hand.getLength(); j > 0 ; j--){
-                if(compare.equals(hand.getCardAt(j))){
+                if(compare.getNumber() == hand.getCardAt(j).getNumber()){
                     Card c = hand.getCardAt(j);
                     hand.remove(c);
                     processing.add(c);
@@ -67,8 +67,11 @@ public class Player {
                 multiplayer *= 10;
             }
 
-            // Calculate points
-            points += multiplayer * ((long)processing.getCardAt(1).getNumber());
+            // Calculate points and take the highest value
+            long p = multiplayer * ((long)processing.getCardAt(1).getNumber());
+            if (p> points){
+                points = p;
+            }
 
             // Move processed cards to the new list
             while (!processing.isEmpty()) {
