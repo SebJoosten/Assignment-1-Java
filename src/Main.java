@@ -17,7 +17,7 @@ public class Main {
 
 
         // Create a dealer with deck 1 generated
-        Dealer dealer= new Dealer(3);
+        Dealer dealer= new Dealer(1);
 
         // Add 10 players
         dealer.addPlayer(new Player("Jack"));

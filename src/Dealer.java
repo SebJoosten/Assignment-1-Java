@@ -79,7 +79,7 @@ public class Dealer {
      */
     public void dealCards(int n) {
 
-        for (int i = 1; i < playerCount() + 1; i++) {
+        for (int i = 0; i < playerCount(); i++) {
 
             CardLinkedList newHand = randomCards(n);
             Player p = getPlayerAtIndex(i);
@@ -231,10 +231,11 @@ public class Dealer {
     public void rankPlayers(){
         int[] pointsList = new int[playerCount()];
         String[] playerNames = new String[playerCount()];
+        System.out.println("********** RANKING **********");
 
         // Loop through all the players and get there names and points totals
         for(int i = 0; i < playerCount(); i++){
-            Player p = getPlayerAtIndex(i + 1);
+            Player p = getPlayerAtIndex(i);
             if (p != null) {
                 pointsList[i] = (int) p.getPoints();
                 playerNames[i] = (String) p.getName();
@@ -261,7 +262,7 @@ public class Dealer {
 
         // Prints out the name and point tally in a formatted list
         // Winner at the top
-        System.out.println("********** RANKING **********");
+
         int countOffset = 0;
 
         for(int i = 0; i < pointsList.length; i++){
@@ -352,7 +353,7 @@ public class Dealer {
          */
         public Player getPlayerAt(int n){
 
-            n --;
+
             if (n == 0){
                 return thisPlayer;
             }
@@ -361,7 +362,7 @@ public class Dealer {
                 System.out.println("***** INVALID PLAYER *****");
                 return null;
             }
-
+            n --;
             return next.getPlayerAt(n);
 
         }
