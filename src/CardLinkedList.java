@@ -191,7 +191,7 @@ public class CardLinkedList {
          */
         public Card getCard(int count) {
             // Count down by one and if not at 0 position move to next node
-            count --;
+
             if(count == 0){
                 return thisCard;
             }
@@ -200,7 +200,7 @@ public class CardLinkedList {
                 System.out.println("*** CARD INDEX OUT OF BOUNDS ***");
                 return null;
             }
-
+            count --;
             return next.getCard(count);
         }
 

@@ -61,7 +61,7 @@ public class Dealer {
             }
 
             // Pick a random card - remove it from deck - add it to return deck
-            int index = rand.nextInt(deck.getLength()) + 1;
+            int index = rand.nextInt(deck.getLength());
             Card temp =  deck.getCardAt(index);
             cards.add(temp);
             deck.remove(temp);
