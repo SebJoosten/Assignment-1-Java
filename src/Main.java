@@ -38,6 +38,7 @@ public class Main {
         dealer.printCards();
         dealer.printPlayers();
 
+        // Rank the players and out put them in a nice list
         dealer.rankPlayers();
 
 

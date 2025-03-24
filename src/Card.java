@@ -13,7 +13,7 @@ public class Card {
     /**
      * Initializes this card object
      * @param n The number/points value of this card
-     * @param s The suit of this card
+     * @param s The suit of this card - Can be any string
      */
     public Card(int n, String s) {
         number = n;
@@ -24,8 +24,8 @@ public class Card {
 
     /**
      * Overrides equals to compare two Card objects
-     * @param input The card you want to compare this instance
-     * @return True if Their points are the same - otherwise false
+     * @param input The object you want to compare this card
+     * @return True if Their points and suit are the same - otherwise false
      */
     @Override
     public boolean equals(Object input) {
@@ -36,16 +36,12 @@ public class Card {
         }
 
         //  Compares the card properties
-        if (compare.getSuit().equals(this.getSuit()) && compare.getNumber() == this.getNumber()) {
-            return true;
-        }
-
-        return false;
+        return compare.getSuit().equals(this.getSuit()) && compare.getNumber() == this.getNumber();
     }
 
     /**
-     * This method retrieves the integer representation of the card's number/points.
-     * @return The number/points of this instance of card
+     * Retrieves the integer representation of the card's number/points.
+     * @return The number/points of this instance of card Default = "0"
      */
     public int getNumber() {
         return number;
@@ -53,8 +49,8 @@ public class Card {
 
     /**
      * Retrieves the suit string of this card.
-     * @return The suit / name of this card usually - ""Hearts   <3 ", "Clubs   o8- ", "Spades  <-- ", or "Diamonds <> ".
-     * If no name was assigned will return "** No Card Name **"
+     * @return The suit / name of this card
+     * Default = "** No Card Name **" .
      */
     public String getSuit() {
 
@@ -69,6 +65,7 @@ public class Card {
 
     /**
      * Creates and formats a string representing this instance of card
+     * Default suit = "** No Card Name **" Default card number = "0"
      * @return The string that represents this card
      */
     public String print(){
@@ -81,8 +78,11 @@ public class Card {
             default -> String.valueOf(number);
         };
 
+        // Null/empty check for output string
+        String suitOut = suit.isEmpty() ? "** No Card Name **" : suit;
+
         // Return formatted string
-        return ("Card - " + String.format("%-6s" , cardName) + " of " + suit);
+        return ("Card - " + String.format("%-6s" , cardName) + " of " + suitOut);
     }
 
 }
