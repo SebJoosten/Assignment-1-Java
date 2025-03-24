@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public class Dealer {
 
-    // A list to hold the cards in the game
+    // A list to hold the cards in the game and the first node
     private CardLinkedList deck = new CardLinkedList();
     private PlayerNode firstPlayer;
 
@@ -44,18 +44,20 @@ public class Dealer {
 
     /**
      * Will deal "n" number of random cards and remove them from dealers deck
-     * The dealer will deal cards to the players in its instance
+     * The dealer will deal cards to the players in this instance
      * @return CardLinkedList with "n" number of cards - Empty list if no deck present or "n" = 0
      */
-    public CardLinkedList randomCards(int n) {
+    private CardLinkedList randomCards(int n) {
 
-        // List for the cards to return and Random number
+        // List for the cards to return and Random number object
         CardLinkedList cards = new CardLinkedList();
         Random rand = new Random();
 
-        // Removes "n" Number of cards Or Empty list
+        // Removes "n" Number of cards
         for (int i = 0; i < n; i++) {
             if (deck.isEmpty()) {
+
+                // If the dealer ran out of cards prints message but continues
                 System.out.println("***** NO CARDS DEALT *****");
                 return cards;
             }
@@ -72,21 +74,24 @@ public class Dealer {
 
     /**
      * Deals all the players in this dealers control "n" number of cards
-     * If no cards left the dealer will deal empty hands
+     * If no cards left the dealer will deal empty hands and print message
      * Make sure you have enough cards for the rules you would like to use
-     * @param n the number of cards for each player in the dealers control
-     *          OR an empty/incomplete hand
+     * @param n the number of cards dealt to each player under this dealers control
+     *          EMPTY HANDS DEALT if dealer runs out of cards
      */
     public void dealCards(int n) {
 
         for (int i = 0; i < playerCount(); i++) {
 
+            // Make a hand and get a player
             CardLinkedList newHand = randomCards(n);
             Player p = getPlayerAtIndex(i);
 
-            // Makes sure something is always returned even if it's an empty hand
+            // Null check with error if return fails
             if (newHand != null && p != null) {
                 p.giveCards(newHand);
+            } else {
+                System.out.println("***** NO CARDS DEALT *****");
             }
         }
     }
@@ -97,7 +102,7 @@ public class Dealer {
      * @return The player at that index in the list
      */
     private Player getPlayerAtIndex(int index) {
-        if (index < 0 ) {
+        if (index < 0 || index >= playerCount()) {
             return null;
         }
         return firstPlayer.getPlayerAt(index);
@@ -172,7 +177,11 @@ public class Dealer {
      */
     public void printCards(){
         System.out.println("--- Dealers cards ---");
-        deck.print();
+
+        if (!deck.isEmpty() || deck != null) {
+            deck.print();
+        }
+
         System.out.println("---------------------");
     }
 
@@ -229,11 +238,13 @@ public class Dealer {
      * It will print out a list inorder of all the players and there total points
      */
     public void rankPlayers(){
-        int[] pointsList = new int[playerCount()];
-        String[] playerNames = new String[playerCount()];
+
         System.out.println("********** RANKING **********");
 
-        // Loop through all the players and get there names and points totals
+        // Loads player names and points in to working arrays
+        int[] pointsList = new int[playerCount()];
+        String[] playerNames = new String[playerCount()];
+
         for(int i = 0; i < playerCount(); i++){
             Player p = getPlayerAtIndex(i);
             if (p != null) {
@@ -242,7 +253,7 @@ public class Dealer {
             }
         }
 
-
+        // Order the arrays and names
         for (int i = 0; i < pointsList.length; i++) {
             for (int j = i + 1; j < pointsList.length; j++) {
                 // Sort the players and their points in descending order
@@ -260,28 +271,39 @@ public class Dealer {
             }
         }
 
-        // Prints out the name and point tally in a formatted list
-        // Winner at the top
+        // Formats output strings and checks for ties
+        // Increments as ranks are calculated represents 1st 2nd 3rd so on
+        int rankOffset = 0;
 
-        int countOffset = 0;
+        for (int i = 0; i < pointsList.length; i++) {
 
-        for(int i = 0; i < pointsList.length; i++){
-            if(pointsList[i] == 0){ continue; }
+            // Checks if this value has been processed as tie
+            if (pointsList[i] == -1) continue;
 
-            if(i + 1 < pointsList.length && pointsList[i] == pointsList[i + 1]){
+            // String builder for output string compilation
+            StringBuilder outPut = new StringBuilder();
+            outPut.append(String.format("%2d - %12s", (i + 1) - rankOffset, playerNames[i]));
 
-                System.out.printf("%2s%n", ((i + 1) - countOffset) + " - " + String.format("%12s", playerNames[i]) + " = " + String.format("%12s", playerNames[i +1]) + " with " + pointsList[i] + " points");
-                countOffset++;
-                pointsList[i + 1] = 0;
+            // Tie off set increments every time there is another tie
+            int tieOffset = 0;
 
-            } else {
-                System.out.printf("%2s%n", ((i + 1) - countOffset) + " - " + String.format("%12s", playerNames[i]) + " with " + pointsList[i] + " points");
+            // While 2 points values next to each-other match combine their name strings
+            while (i + 1 + tieOffset < pointsList.length && pointsList[i] == pointsList[i + 1 + tieOffset]) {
+                outPut.append(" = ").append(String.format(playerNames[i + 1 + tieOffset]));
+                rankOffset++;
+                pointsList[i + 1 + tieOffset] = -1;
+                tieOffset++;
             }
+
+            // Append points to string and print
+            outPut.append(" with ").append(pointsList[i]).append(" points");
+            System.out.println(outPut);
+
         }
+
         System.out.println("-----------------------------");
 
     }
-
 
     // ********** Player Node **********
 
@@ -300,11 +322,11 @@ public class Dealer {
 
         /**
          * Initializes this node with the input card
-         * @param c The card you want to add to this node
+         * @param p The player in this node
          * @param n The next node in the chain
          */
-        public PlayerNode(Player c, PlayerNode n) {
-            thisPlayer = c;
+        public PlayerNode(Player p, PlayerNode n) {
+            thisPlayer = p;
             next = n;
         }
 
@@ -316,13 +338,11 @@ public class Dealer {
          * @return previous node count + 1 if last otherwise continue down the list
          */
         public int getLength(int count) {
+
             count ++;
 
-            if(next != null) {
-                return next.getLength(count);
-            }
-
-            return count;
+            // Check for next otherwise return count
+            return (next != null) ? next.getLength(count) : count;
         }
 
         /**
@@ -331,19 +351,21 @@ public class Dealer {
          * @return The next node in this list or NULL if last node
          */
         public PlayerNode getNext() {
-            if(next == null) {return null;}
-            return next;
+
+            return (next == null) ? null : next;
+
         }
 
         /**
          * Prints the name of this player and there score
          */
         public void print(){
+
             thisPlayer.print();
 
             // if there is another node call its print Function
-            if (next == null) { return; }
-            next.print();
+            if (next != null) next.print();
+
         }
 
         /**
@@ -353,17 +375,19 @@ public class Dealer {
          */
         public Player getPlayerAt(int n){
 
-
+            // Return the player if count is 0
             if (n == 0){
                 return thisPlayer;
             }
 
+            // Check next null, print error and return
             if(next == null){
                 System.out.println("***** INVALID PLAYER *****");
                 return null;
             }
-            n --;
-            return next.getPlayerAt(n);
+
+            // Otherwise keep calling
+            return next.getPlayerAt(n -1);
 
         }
 

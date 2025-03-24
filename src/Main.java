@@ -41,6 +41,5 @@ public class Main {
         // Rank the players and out put them in a nice list
         dealer.rankPlayers();
 
-
     }
 }
