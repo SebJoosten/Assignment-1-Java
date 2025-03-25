@@ -61,8 +61,9 @@ public class CardLinkedList {
      */
     public Card getCardAt(int index) {
 
+
         // Check deck is populated or index is valid
-        if(head == null || index > getLength()) {
+        if(head == null || index > getLength() || index < 0) {
             System.out.println("*** CARD INDEX OUT OF BOUNDS ***");
             return null;
         }
