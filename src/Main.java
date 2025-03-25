@@ -7,60 +7,67 @@ public class Main {
         System.out.println("**** COMPX-201 Assignment 1 ****");
         System.out.println("**** Sebastiaan Joosten ****");
 
+        /**
+         * !!!!! READ ME !!!!!
+         * I'm not totally sure how the game itself is meant to be implemented
+         * There is a dealer class that holds all the rules and MAIN is used to set the order
+         * This could also all be done in main, but we were taught not to do that so im confused
+         */
+
 
         // Create a dealer with deck 1 generated
-        Dealer dealer= new Dealer(1);
+        CardDraw cardDraw= new CardDraw(1);
 
         // Add 10 players
-        dealer.addPlayer(new Player("Jack"));
-        dealer.addPlayer(new Player("Seb"));
-        dealer.addPlayer(new Player("Josh"));
-        dealer.addPlayer(new Player("Joe"));
-        dealer.addPlayer(new Player("Laura"));
-        dealer.addPlayer(new Player("Sabeen"));
-        dealer.addPlayer(new Player("Kimi"));
-        dealer.addPlayer(new Player("Ben"));
-        dealer.addPlayer(new Player("The unknown"));
-        dealer.addPlayer(new Player("Redacted"));
+        cardDraw.addPlayer(new Player("Jack"));
+        cardDraw.addPlayer(new Player("Seb"));
+        cardDraw.addPlayer(new Player("Josh"));
+        cardDraw.addPlayer(new Player("Joe"));
+        cardDraw.addPlayer(new Player("Laura"));
+        cardDraw.addPlayer(new Player("Sabeen"));
+        cardDraw.addPlayer(new Player("Kimi"));
+        cardDraw.addPlayer(new Player("Ben"));
+        cardDraw.addPlayer(new Player("The unknown"));
+        cardDraw.addPlayer(new Player("Redacted"));
 
         // Deal each played 5 cards
-        dealer.dealCards(5);
+        cardDraw.dealCards(5);
 
         // Print a list of dealers remaining cards and players cards
-        dealer.printCards();
+        cardDraw.printCards();
 
         // Prints a list of playyers and there cards
-        dealer.printPlayers();
+        cardDraw.printPlayers();
 
         // Rank the players and out put them in a nice list
-        dealer.rankPlayers();
+        cardDraw.rankPlayers();
 
         // Restart GAME 2
-        dealer.restartGame();
+        cardDraw.restartGame();
 
         // Add 10 players
-        dealer.addPlayer(new Player("Jack"));
-        dealer.addPlayer(new Player("Seb"));
-        dealer.addPlayer(new Player("Josh"));
-        dealer.addPlayer(new Player("Joe"));
-        dealer.addPlayer(new Player("Laura"));
-        dealer.addPlayer(new Player("Sabeen"));
-        dealer.addPlayer(new Player("Kimi"));
-        dealer.addPlayer(new Player("Ben"));
-        dealer.addPlayer(new Player("The unknown"));
-        dealer.addPlayer(new Player("Redacted"));
+        cardDraw.addPlayer(new Player("Jack"));
+        cardDraw.addPlayer(new Player("Seb"));
+        cardDraw.addPlayer(new Player("Josh"));
+        cardDraw.addPlayer(new Player("Joe"));
+        cardDraw.addPlayer(new Player("Laura"));
+        cardDraw.addPlayer(new Player("Sabeen"));
+        cardDraw.addPlayer(new Player("Kimi"));
+        cardDraw.addPlayer(new Player("Ben"));
+        cardDraw.addPlayer(new Player("The unknown"));
+        cardDraw.addPlayer(new Player("Redacted"));
 
         // Deal each played 5 cards
-        dealer.dealCards(5);
+        cardDraw.dealCards(5);
 
         // Print a list of dealers remaining cards and players cards
-        dealer.printCards();
+        cardDraw.printCards();
 
         // Prints a list of playyers and there cards
-        dealer.printPlayers();
+        cardDraw.printPlayers();
 
         // Rank the players and out put them in a nice list
-        dealer.rankPlayers();
+        cardDraw.rankPlayers();
 
 
 

@@ -1,7 +1,7 @@
 /**
  * This is the player it
  * - holds the hands
- * - calculates this players points based on the hand
+ * - calculates these players points based on the hand
  */
 public class Player {
     private String name;
@@ -48,7 +48,7 @@ public class Player {
             return 0;
         }
 
-        // Set points to 0 and make a copy of the hand
+        // Set points to 0 and make a copy of the hand for handling
         long points = 0;
         CardLinkedList handCopy = hand.getCopy();
 
@@ -78,6 +78,8 @@ public class Player {
 
             // Calculate points and take the highest value
             long p = multiplier * ((long) processing.getCardAt(0).getNumber());
+
+            // Check if this cards/tie total points is highest
             if (p > points) {
                 points = p;
             }

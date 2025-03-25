@@ -1,15 +1,16 @@
-
 // Used for random card picking
 import java.util.Random;
 
 /**
+ * READ ME!! This class could be used in main, but it was easier for testing to have them separate
+ *
  * This is the game dealer
  * The dealer is either given cards or asked to generate a standard deck
  * The dealer is given the players in this game
  * The dealer also deals cards and calculates points
  * *** PLAYER NODE AT BOTTOM ***
  */
-public class Dealer {
+public class CardDraw {
 
     // A list to hold the cards in the game and the first node
     private CardLinkedList deck = new CardLinkedList();
@@ -26,7 +27,7 @@ public class Dealer {
      *          3 = Deck of all the same card 52 times
      *          Default Normal 52 card deck
      */
-    public Dealer( int d){
+    public CardDraw(int d){
         deckVer = d;
         initDeck();
         firstPlayer = null;
@@ -36,7 +37,7 @@ public class Dealer {
      * Constructor for insertion of custom deck
      * @param d The CardLinkedList you wish this instance of dealer to use
      */
-    public Dealer(CardLinkedList d){
+    public CardDraw(CardLinkedList d){
         deck = d;
     }
 
@@ -245,29 +246,22 @@ public class Dealer {
         int[] pointsList = new int[playerCount()];
         String[] playerNames = new String[playerCount()];
 
-        for(int i = 0; i < playerCount(); i++){
+        // Load player names/points in to handling arrays //*** Note double check output ***
+        for (int i = 0; i < playerCount(); i++) {
             Player p = getPlayerAtIndex(i);
             if (p != null) {
-                pointsList[i] = (int) p.getPoints();
-                playerNames[i] = (String) p.getName();
-            }
-        }
+                int points = (int) p.getPoints();
+                String name = p.getName();
 
-        // Order the arrays and names
-        for (int i = 0; i < pointsList.length; i++) {
-            for (int j = i + 1; j < pointsList.length; j++) {
-                // Sort the players and their points in descending order
-                if (pointsList[i] < pointsList[j]) {
-                    // Swap points
-                    int p = pointsList[i];
-                    pointsList[i] = pointsList[j];
-                    pointsList[j] = p;
-
-                    // Swap player names
-                    String n = playerNames[i];
-                    playerNames[i] = playerNames[j];
-                    playerNames[j] = n;
+                int j = i;
+                while (j > 0 && pointsList[j - 1] < points) {
+                    pointsList[j] = pointsList[j - 1];
+                    playerNames[j] = playerNames[j - 1];
+                    j--;
                 }
+
+                pointsList[j] = points;
+                playerNames[j] = name;
             }
         }
 
@@ -306,6 +300,11 @@ public class Dealer {
     }
 
     // ********** Player Node **********
+
+
+
+
+
 
     /**
      * This is a node used for a linked list of players.
