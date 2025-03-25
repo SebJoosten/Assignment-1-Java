@@ -1,6 +1,7 @@
-
 /**
- * This is the player it holds the hands and calculates up the points to give to the dealer to congratulate the winner
+ * This is the player it
+ * - holds the hands
+ * - calculates this players points based on the hand
  */
 public class Player {
     private String name;
@@ -22,10 +23,17 @@ public class Player {
     /**
      * Returns and resets this players hand
      * @return a CardLinkedList of all the cards this player had
+     * Otherwise an empty list
      */
     public CardLinkedList returnHand() {
 
-        CardLinkedList temp = hand;
+        // Check for empty hand
+        if (hand == null) {
+            hand = new CardLinkedList(); // Ensure hand is always initialized
+            return new CardLinkedList(); // Return an empty list if hand was null
+        }
+
+        CardLinkedList temp = hand.isEmpty() ? new CardLinkedList() : hand;
         hand = new CardLinkedList();
         return temp;
     }
@@ -34,56 +42,50 @@ public class Player {
      *A method asking the player for the tally of their points
      * @return The number of points this player has from there hand
      */
-    public long getPoints(){
-
+    public long getPoints() {
         // Check hand is not empty
-        if(hand == null || hand.isEmpty()){return 0;}
+        if (hand == null || hand.isEmpty()) {
+            return 0;
+        }
 
-        // Set points to 0 and initialize processed list
+        // Set points to 0 and make a copy of the hand
         long points = 0;
-        CardLinkedList processed = new CardLinkedList();
+        CardLinkedList handCopy = hand.getCopy();
 
-        // For every card in the hand
-        while(!hand.isEmpty()){
+        // For every card in the handCopy
+        while (!handCopy.isEmpty()) {
 
-            // Take a card out of the hand
+            // Take a card out of the handCopy
             CardLinkedList processing = new CardLinkedList();
-            Card compare = hand.getCardAt(0);
-            hand.remove(compare);
+            Card compare = handCopy.getCardAt(0);
+            handCopy.remove(compare);
             processing.add(compare);
 
-            // For every remaining card
-            for(int j = hand.getLength() -1; j > 0 ; j--){
-                if(compare.getNumber() == hand.getCardAt(j).getNumber()){
-                    Card c = hand.getCardAt(j);
-                    hand.remove(c);
+            // For every remaining card Look for doubles
+            for (int j = handCopy.getLength() - 1; j >= 0; j--) {
+                if (compare.getNumber() == handCopy.getCardAt(j).getNumber()) {
+                    Card c = handCopy.getCardAt(j);
+                    handCopy.remove(c);
                     processing.add(c);
                 }
             }
 
-            // Set the multiplier
-            long multiplayer = 1;
-            for(int i = 1; i < processing.getLength(); i++){
-                multiplayer *= 10;
+            // Set the multiplier based on number of copies
+            long multiplier = 1;
+            for (int i = processing.getLength(); i > 1; i--) {
+                multiplier *= 10;
             }
 
             // Calculate points and take the highest value
-            long p = multiplayer * ((long)processing.getCardAt(0).getNumber());
-            if (p> points){
+            long p = multiplier * ((long) processing.getCardAt(0).getNumber());
+            if (p > points) {
                 points = p;
             }
 
-            // Move processed cards to the new list
-            while (!processing.isEmpty()) {
-                Card c = processing.getCardAt(0);
-                processed.add(c);
-                processing.remove(c);
-            }
         }
 
-        hand = processed;
-
         return points;
+
     }
 
     /**
@@ -98,9 +100,14 @@ public class Player {
     /**
      * Gets the players name
      * @return String of this player instances name
+     * Otherwise returns "** NO ASSIGNED NAME **"
      */
     public String getName() {
-        if(name == null||name.isEmpty()){return "** NO ASSIGNED NAME **";}
+
+        if(name == null||name.isEmpty()){
+            return "** NO ASSIGNED NAME **";
+        }
+
         return name;
     }
 
@@ -108,8 +115,17 @@ public class Player {
      * Prints out this players hand
      */
     public void print() {
-        System.out.println("------ " + name + " ------");
+
+        System.out.println("------ " + getName() + " ------");
+
+        if (hand == null) {
+            System.out.println("Player " + getName() + " has no cards");
+            return;
+        }
         hand.print();
+
+        System.out.println("Player " + getName() + " has " + getPoints() + " points");
+
     }
 
 }

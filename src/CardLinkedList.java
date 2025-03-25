@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * This is the class to hold the linked list of cards in the card game
  * it can also check some operators of the list.
@@ -120,6 +122,29 @@ public class CardLinkedList {
 
         // Call print down the rest of the nodes
         head.print();
+    }
+
+    /**
+     * Makes a copy of the cards in this deck used for points or other things
+     * Cards are not removed from hand and are a new object
+     * @return a NEW linked list with a copy of these cards
+     */
+    public CardLinkedList getCopy(){
+
+        // Get number of cards and make return list
+        int length = head.getLength(0);
+        CardLinkedList copy = new CardLinkedList();
+
+        // Make copies of the cards and put them in a new hand
+        for(int i = 0 ; i < length ; i++ ){
+           int n =  Objects.requireNonNull(head.getCard(i)).getNumber();
+           String s = Objects.requireNonNull(head.getCard(i)).getSuit();
+           Card c = new Card(n, s);
+           copy.add(c);
+        }
+
+        return copy;
+
     }
 
 
