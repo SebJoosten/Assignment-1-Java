@@ -1,9 +1,6 @@
-/**
- * This is the main body of assignment one
- */
-
 public class Main {
     public static void main(String[] args) {
+
         System.out.println("**** COMPX-201 Assignment 1 ****");
         System.out.println("**** Sebastiaan Joosten ****");
 
@@ -38,7 +35,7 @@ public class Main {
         // Restart GAME 2
         cardDraw.restartGame();
 
-        // Deal each played 5 cards
+        // Deal each played 4 cards
         cardDraw.dealCards(4);
 
         // Print a list of dealers remaining cards and players cards
@@ -53,6 +50,8 @@ public class Main {
         // clears all the players but doesn't reset the deck
         cardDraw.clearPlayers();
 
+
+
         // Debugger just abuses the deck for a bit
         /*
         Debugging debugging = new Debugging();
@@ -64,7 +63,8 @@ public class Main {
         debugging.printDeck();
         debugging.removeMoreThenLength();
         debugging.lookForRandomInvalidCard(500);
-         */
+        debugging.addNulls(10);
+        */
 
 
     }

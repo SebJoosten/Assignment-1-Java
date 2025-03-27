@@ -16,7 +16,9 @@ public class CardLinkedList {
      * Initializes this list with no cards in it
      */
     public CardLinkedList() {
+
         head = null;
+
     }
 
     //***** Methods *****
@@ -26,7 +28,9 @@ public class CardLinkedList {
      * @return True if empty, False if populated
      */
     public boolean isEmpty() {
+
         return head == null;
+
     }
 
     /**
@@ -34,8 +38,10 @@ public class CardLinkedList {
      * @return The number of counter cards, 0 if no cards in list
      */
     public int getLength() {
+
         if(head == null) { return 0; }
         return head.getLength(0);
+
     }
 
     /**
@@ -52,6 +58,7 @@ public class CardLinkedList {
 
         // If list is populated send call down the nodes
         return head.hasCard(c);
+
     }
 
     /**
@@ -64,12 +71,15 @@ public class CardLinkedList {
 
         // Check deck is populated or index is valid
         if(head == null || index > getLength() || index < 0) {
+
             System.out.println("*** CARD INDEX OUT OF BOUNDS ***");
             return null;
+
         }
 
         // If deck is populated send the call down the list
         return head.getCard(index);
+
     }
 
     /**
@@ -77,14 +87,18 @@ public class CardLinkedList {
      * @param c The card you wish to add to this instance of list - Invalid card will just return
      */
     public void add(Card c) {
+
         // Check to avoid null adds
         if(c == null) {
+
             System.out.println("***** INVALID CARD ADD *****");
             return;
+
         }
 
         // Add the card to a new node in the list
         head = new Node(c, head);
+
     }
 
     /**
@@ -95,19 +109,24 @@ public class CardLinkedList {
 
         // Check there is objects in the list and c is not null
         if (c == null || head == null) {
+
             System.out.println("***** INVALID CARD REMOVE *****");
             return;
+
         }
 
         // Checks the head before passing down the nodes
         if (head.isCard() != null && head.isCard().equals(c)) {
+
             // Remove card from the list
             head = head.getNext();
             return;
+
         }
 
         // recursive call down the nodes if this node is not the card
         head.remove(c);
+
     }
 
     /**
@@ -117,12 +136,15 @@ public class CardLinkedList {
 
         // Check list is populated
         if (head == null) {
+
             System.out.println("***** NO CARDS IN LIST *****");
             return;
+
         }
 
         // Call print down the rest of the nodes
         head.print();
+
     }
 
     /**
@@ -138,10 +160,12 @@ public class CardLinkedList {
 
         // Make copies of the cards and put them in a new hand
         for(int i = 0 ; i < length ; i++ ){
+
            int n =  Objects.requireNonNull(head.getCard(i)).getNumber();
            String s = Objects.requireNonNull(head.getCard(i)).getSuit();
            Card c = new Card(n, s);
            copy.add(c);
+
         }
 
         return copy;
@@ -157,7 +181,9 @@ public class CardLinkedList {
      */
     private class Node {
 
+        // The next node in this list
         private Node next;
+        // The card held in this node
         private Card thisCard;
 
         //***** constructor *****
@@ -168,8 +194,10 @@ public class CardLinkedList {
          * @param n The next node in the chain
          */
         public Node(Card c, Node n) {
+
             thisCard = c;
             next = n;
+
         }
 
         //***** Methods *****
@@ -200,6 +228,7 @@ public class CardLinkedList {
          * @return The number of nodes
          */
         public int getLength(int count) {
+
             count ++;
 
             if(next != null) {
@@ -223,11 +252,15 @@ public class CardLinkedList {
             }
 
             if(next == null) {
+
                 System.out.println("*** CARD INDEX OUT OF BOUNDS ***");
                 return null;
+
             }
+
             count --;
             return next.getCard(count);
+
         }
 
         /**
@@ -235,11 +268,14 @@ public class CardLinkedList {
          * @return The next node in this list
          */
         public Node getNext() {
+
             if (next == null) {
                 //System.out.println("*** END OF CARD LIST ***");
                 return null;
             }
+
             return next;
+
         }
 
         /**
@@ -247,7 +283,9 @@ public class CardLinkedList {
          * @return The card in this node
          */
         public Card isCard() {
+
             return thisCard;
+
         }
 
         /**
@@ -258,8 +296,10 @@ public class CardLinkedList {
 
             // check if the next card is the one your looking for and remove it
             if (next.isCard() != null && next.isCard().equals(c)) {
+
                 next = next.getNext();
                 return;
+
             }
 
             // Pass down the call to next node
@@ -271,12 +311,15 @@ public class CardLinkedList {
          * Just prints the value of this card in the console for checking
          */
         public void print(){
+
             System.out.println(thisCard.print());
 
             // if there is another node call its print Function
             if (next == null) { return; }
             next.print();
+
         }
+
     }
 
 }

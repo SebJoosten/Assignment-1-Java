@@ -2,10 +2,10 @@
 import java.util.Random;
 
 /**
- * This is the game dealer
- * The dealer is either given cards or asked to generate a standard deck
- * The dealer is given the players in this game
- * The dealer also deals cards and calculates points
+ * This is the game dealer - CardDraw
+ * CardDraw is either given cards or asked to generate a standard deck
+ * CardDraw is given the names of players in the game
+ * CardDraw also deals cards and calculates rank order based on Players points
  * *** PLAYER NODE AT BOTTOM ***
  */
 public class CardDraw {
@@ -26,9 +26,11 @@ public class CardDraw {
      *          Default Normal 52 card deck
      */
     public CardDraw(int d){
+
         deckVer = d;
         initDeck();
         firstPlayer = null;
+
     }
 
     /**
@@ -36,7 +38,9 @@ public class CardDraw {
      * @param d The CardLinkedList you wish this instance of dealer to use
      */
     public CardDraw(CardLinkedList d){
+
         deck = d;
+
     }
 
     //****** Methods ******
@@ -54,11 +58,13 @@ public class CardDraw {
 
         // Removes "n" Number of cards
         for (int i = 0; i < n; i++) {
+
             if (deck.isEmpty()) {
 
                 // If the dealer ran out of cards prints message but continues
                 System.out.println("***** NO CARDS DEALT *****");
                 return cards;
+
             }
 
             // Pick a random card - remove it from deck - add it to return deck
@@ -66,15 +72,18 @@ public class CardDraw {
             Card temp =  deck.getCardAt(index);
             cards.add(temp);
             deck.remove(temp);
+
         }
 
         return cards;
+
     }
 
     /**
      * Deals all the players in this dealers control "n" number of cards
-     * If no cards left the dealer will deal empty hands and print message
+     * If no cards left the CardDraw will deal empty hands and print message
      * Make sure you have enough cards for the rules you would like to use
+     * Otherwise some players will have empty hands
      * @param n the number of cards dealt to each player under this dealers control
      *          EMPTY HANDS DEALT if dealer runs out of cards
      */
@@ -89,10 +98,13 @@ public class CardDraw {
             // Null check with error if return fails
             if (newHand != null && p != null) {
                 p.giveCards(newHand);
+
             } else {
                 System.out.println("***** NO CARDS DEALT *****");
             }
+
         }
+
     }
 
     /**
@@ -101,9 +113,11 @@ public class CardDraw {
      * @return The player at that index in the list
      */
     private Player getPlayerAtIndex(int index) {
+
         if (index < 0 || index >= playerCount()) {
             return null;
         }
+
         return firstPlayer.getPlayerAt(index);
     }
 
@@ -111,18 +125,22 @@ public class CardDraw {
      * Populated this dealers deck with a standard 52 card set
      */
     private void standardCardDeck(){
+
         for(int i = 0; i < 13; i++){
             Card addCard = new Card((i + 1) , "Hearts   <3 ");
             deck.add(addCard);
         }
+
         for(int i = 0; i < 13; i++){
             Card addCard = new Card((i + 1) , "Clubs   o8- ");
             deck.add(addCard);
         }
+
         for(int i = 0; i < 13; i++){
             Card addCard = new Card((i + 1) , "Spades  <-- ");
             deck.add(addCard);
         }
+
         for(int i = 0; i < 13; i++){
             Card addCard = new Card((i + 1) , "Diamonds <> ");
             deck.add(addCard);
@@ -138,6 +156,7 @@ public class CardDraw {
      *      Default Normal 52 card deck
      */
     private void initDeck(){
+
         switch (deckVer){
 
             // Normal card deck
@@ -167,6 +186,7 @@ public class CardDraw {
                 System.out.println("*** DEFAULT  APPLIED ***");
                 standardCardDeck();
                 break;
+
         }
 
     }
@@ -175,6 +195,7 @@ public class CardDraw {
      * Prints out all the cards the dealer currently has in this instance
      */
     public void printCards(){
+
         System.out.println("--- Dealers cards ---");
 
         if (!deck.isEmpty() || deck != null) {
@@ -182,19 +203,24 @@ public class CardDraw {
         }
 
         System.out.println("---------------------");
+
     }
 
     /**
      * Prints out a list of all the players this dealer manages
      */
     public void printPlayers(){
+
         if(firstPlayer == null){
             System.out.println("***** No Players *****");
+
         } else {
             System.out.println("---    Players    ---");
             firstPlayer.print();
             System.out.println("---------------------");
+
         }
+
     }
 
     /**
@@ -208,8 +234,9 @@ public class CardDraw {
 
         Player p = new Player(name);
 
-        // Add a player to this dealer
+        // Add a player to this CardDraw linked list
         firstPlayer = new PlayerNode(p, firstPlayer);
+
     }
 
     /**
@@ -217,8 +244,11 @@ public class CardDraw {
      * @return The number of Players otherwise 0 if no players
      */
     public int playerCount() {
+
         if(firstPlayer == null) { return 0; }
+
         return firstPlayer.getLength(0);
+
     }
 
     /**
@@ -228,8 +258,11 @@ public class CardDraw {
 
         System.out.println("***** GAME RESET *****");
         deck = new CardLinkedList();
+
         dealCards(0);
+
         initDeck();
+
     }
 
     /**
@@ -244,7 +277,7 @@ public class CardDraw {
         int[] pointsList = new int[playerCount()];
         String[] playerNames = new String[playerCount()];
 
-        // Load player names/points in to handling arrays //*** Note double check output ***
+        // Load player names/points in to handling arrays in order of points
         for (int i = 0; i < playerCount(); i++) {
             Player p = getPlayerAtIndex(i);
             if (p != null) {
@@ -272,23 +305,27 @@ public class CardDraw {
             // Checks if this value has been processed as tie
             if (pointsList[i] == -1) continue;
 
-            // String builder for output string compilation
+            // Build the output string for the ranking list
             StringBuilder outPut = new StringBuilder();
             outPut.append(String.format("%2d - %12s", (i + 1) - rankOffset, playerNames[i]));
 
             // Tie off set increments every time there is another tie
             int tieOffset = 0;
 
-            // While 2 points values next to each-other match combine their name strings
+            // While 2 points values next to each-other ie Tie
             while (i + 1 + tieOffset < pointsList.length && pointsList[i] == pointsList[i + 1 + tieOffset]) {
+
+                // Append the other player's name to the rank list and set there points to -1
                 outPut.append(" = ").append(String.format(playerNames[i + 1 + tieOffset]));
                 rankOffset++;
                 pointsList[i + 1 + tieOffset] = -1;
                 tieOffset++;
+
             }
 
             // Append points to string and print
             outPut.append(" with ").append(pointsList[i]).append(" points");
+            // Output the string
             System.out.println(outPut);
 
         }
@@ -301,9 +338,12 @@ public class CardDraw {
      * Clears all the players and restarts the game
      */
     public void clearPlayers(){
+
         System.out.println("***** PLAYERS CLEARED *****");
         firstPlayer = null;
+
         restartGame();
+
     }
 
     // ******************** Player ********************
@@ -314,7 +354,10 @@ public class CardDraw {
      * - calculates these players points based on the hand
      */
     private class Player {
+
+        // The name of this instance of player
         private String name;
+        // The cards they hold
         private CardLinkedList hand;
 
         // ****** Constructor ******
@@ -324,8 +367,10 @@ public class CardDraw {
          * @param n The Name of this instance of player
          */
         public Player(String n) {
+
             name = n;
             hand = new CardLinkedList();
+
         }
 
         //****** Methods ******
@@ -346,6 +391,7 @@ public class CardDraw {
             CardLinkedList temp = hand.isEmpty() ? new CardLinkedList() : hand;
             hand = new CardLinkedList();
             return temp;
+
         }
 
         /**
@@ -353,6 +399,7 @@ public class CardDraw {
          * @return The number of points this player has from there hand
          */
         public long getPoints() {
+
             // Check hand is not empty
             if (hand == null || hand.isEmpty()) {
                 return 0;
@@ -371,19 +418,25 @@ public class CardDraw {
                 handCopy.remove(compare);
                 processing.add(compare);
 
-                // For every remaining card Look for doubles
+                // For every remaining cards in the hand look for doubles
                 for (int j = handCopy.getLength() - 1; j >= 0; j--) {
+
                     if (compare.getNumber() == handCopy.getCardAt(j).getNumber()) {
+
                         Card c = handCopy.getCardAt(j);
                         handCopy.remove(c);
                         processing.add(c);
+
                     }
+
                 }
 
                 // Set the multiplier based on number of copies
                 long multiplier = 1;
                 for (int i = processing.getLength(); i > 1; i--) {
+
                     multiplier *= 10;
+
                 }
 
                 // Calculate points and take the highest value
@@ -391,7 +444,9 @@ public class CardDraw {
 
                 // Check if this cards/tie total points is highest
                 if (p > points) {
+
                     points = p;
+
                 }
 
             }
@@ -405,8 +460,10 @@ public class CardDraw {
          * @param c CardLinkedList with cards for the player - Null input just returns
          */
         public void giveCards(CardLinkedList c) {
+
             if (c == null) { return; }
             hand = c;
+
         }
 
         /**
@@ -434,6 +491,7 @@ public class CardDraw {
                 System.out.println("Player " + getName() + " has no cards");
                 return;
             }
+
             hand.print();
 
             System.out.println("Player " + getName() + " has " + getPoints() + " points");
@@ -443,7 +501,8 @@ public class CardDraw {
     }
 
     // ******************** Player Node ********************
-    // READ ME this could have been done another way but I just wanted to demonstrate another list
+    // READ ME this could have been done another way but seeing as this is an assignment about linked lists
+    // The players are also in one
 
     /**
      * This is a node used for a linked list of players.
@@ -464,8 +523,10 @@ public class CardDraw {
          * @param n The next node in the chain
          */
         public PlayerNode(Player p, PlayerNode n) {
+
             thisPlayer = p;
             next = n;
+
         }
 
         //***** Methods *****
@@ -481,6 +542,7 @@ public class CardDraw {
 
             // Check for next otherwise return count
             return (next != null) ? next.getLength(count) : count;
+
         }
 
         /**

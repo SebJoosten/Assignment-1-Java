@@ -16,8 +16,10 @@ public class Card {
      * @param s The suit of this card - Can be any string
      */
     public Card(int n, String s) {
+
         number = n;
         suit = s;
+
     }
 
     // ***** Methods *****
@@ -44,7 +46,9 @@ public class Card {
      * @return The number/points of this instance of card Default = "0"
      */
     public int getNumber() {
+
         return number;
+
     }
 
     /**
